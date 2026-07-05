@@ -320,135 +320,228 @@ main {
     display: inline-block;
 }
 
-/* === MINI CELU VERO (Rediseñado) === */
+/* === MINI CELU VERO (MEJORADO) === */
 :root {
     --image: url('xd.jpg');
     --vero-celeste: #00758a;
     --vero-red: #7d0000;
     --vero-dark: #002830;
     --vero-light: #0099b3;
+    --vero-shadow: rgba(0, 0, 0, .45);
+    --vero-glow: rgba(0, 153, 179, .28);
 }
 
-#vero * { text-shadow: none; box-sizing: border-box; }
-#vero a:hover { background: transparent !important; }
+#vero, #vero * {
+    box-sizing: border-box;
+    text-shadow: none;
+}
+
+#vero a:hover {
+    background: transparent !important;
+}
 
 #vero {
     z-index: 999999;
-    width: 100px;
-    height: 340px;
     position: fixed;
-    bottom: 20px;
-    right: 30px;
+    right: 18px;
+    bottom: 18px;
+    width: 116px;
+    height: 350px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     align-items: center;
-    font-family: 'Helvetica', Arial, sans-serif;
+    justify-content: flex-end;
+    flex-direction: column;
+    font-family: Helvetica, Arial, sans-serif;
+    filter: drop-shadow(0 12px 18px rgba(0,0,0,.25));
 }
 
 /* Antena */
 #antenna {
     width: 6px;
-    height: 30px;
-    background: var(--vero-dark);
-    border: 2px solid var(--vero-celeste);
-    border-radius: 4px 4px 0 0;
+    height: 34px;
+    background: linear-gradient(to bottom, var(--vero-light), var(--vero-dark));
+    border: 1px solid rgba(255,255,255,.15);
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
     position: absolute;
-    bottom: 165px;
-    right: 10px;
-    z-index: -1;
-    box-shadow: 2px 0 3px rgba(0,0,0,0.5);
+    bottom: 166px;
+    right: 18px;
+    z-index: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,.45);
 }
 
-/* Estados generales */
+/* Base común */
 #front, #topscreen, #keyboard {
-    width: 90px;
+    width: 100px;
     position: relative;
-    background: linear-gradient(145deg, var(--vero-light), var(--vero-dark));
-    border: 2px solid var(--vero-dark);
-    box-shadow: 2px 4px 15px rgba(0,0,0,0.6), inset 0 1px 3px rgba(255,255,255,0.2);
+    border: 2px solid rgba(0, 40, 48, .95);
+    background: linear-gradient(145deg, #00a1bc 0%, #00414d 55%, #002830 100%);
+    box-shadow:
+        0 6px 16px var(--vero-shadow),
+        inset 0 1px 0 rgba(255,255,255,.18),
+        inset 0 -1px 0 rgba(0,0,0,.35);
+    overflow: hidden;
 }
 
-/* Estado Cerrado (Tapa Frontal) */
+/* Estado cerrado */
 #front {
-    height: 160px;
-    border-radius: 15px 15px 5px 5px;
+    height: 168px;
+    border-radius: 20px 20px 12px 12px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    visibility: visible;
+    justify-content: center;
+    position: relative;
+    isolation: isolate;
+}
+
+#front::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 16px 16px 10px 10px;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.18), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,.06), transparent 35%, rgba(0,0,0,.12));
+    pointer-events: none;
+}
+
+#front::after {
+    content: "";
+    position: absolute;
+    bottom: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 46px;
+    height: 4px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, transparent, var(--vero-red), transparent);
+    box-shadow: 0 0 10px rgba(125,0,0,.55);
 }
 
 #front .labelidk {
-    width: 70%;
-    height: 45px;
-    background: var(--vero-dark);
-    border: 1px solid var(--vero-light);
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 153, 179, 0.3) inset;
+    width: 72%;
+    height: 50px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.06), transparent 45%),
+        var(--vero-dark);
+    border: 1px solid rgba(0, 153, 179, .55);
+    border-radius: 12px;
+    box-shadow:
+        inset 0 0 14px rgba(0, 153, 179, .18),
+        0 0 0 1px rgba(0,0,0,.25);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     position: relative;
 }
 
-/* Texto VERO en la tapa */
-#front .labelidk:after {
+#front .labelidk::after {
     content: "VERO";
     color: var(--vero-red);
     font-weight: 900;
     font-size: 16px;
-    letter-spacing: 2px;
-    text-shadow: 0 0 8px var(--vero-red);
+    letter-spacing: 2.4px;
+    text-shadow: 0 0 8px rgba(125, 0, 0, .9);
 }
 
-/* Línea roja decorativa en la tapa */
-#front .labelidk:before {
+#front .labelidk::before {
     content: "";
     position: absolute;
-    bottom: -15px;
-    width: 40px;
+    bottom: -12px;
+    width: 42px;
     height: 4px;
+    border-radius: 999px;
     background: var(--vero-red);
-    border-radius: 2px;
-    box-shadow: 0 0 10px var(--vero-red);
+    box-shadow: 0 0 10px rgba(125, 0, 0, .7);
 }
 
-/* Esconder states por defecto */
-#topscreen, #keyboard { display: none; }
+/* Estado abierto por defecto oculto */
+#topscreen, #keyboard {
+    display: none;
+}
 
-/* Estado Abierto (Magia de :target) */
-#vero:has(:target:is(#topscreen)) #front { display: none; }
-#vero:has(:target:is(#topscreen)) #topscreen { display: flex; flex-direction: column; border-radius: 12px 12px 2px 2px; margin-bottom: 3px; }
-#vero:has(:target:is(#topscreen)) #keyboard { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; border-radius: 2px 2px 12px 12px; height: 160px; padding: 10px; }
+/* Transición suave */
+#front, #topscreen, #keyboard {
+    transition: opacity .28s ease, transform .28s ease, filter .28s ease;
+}
+
+/* Estado abierto */
+#vero:has(#topscreen:target) #front {
+    display: none;
+}
+
+#vero:has(#topscreen:target) #topscreen {
+    display: flex;
+    flex-direction: column;
+    height: 152px;
+    border-radius: 18px 18px 8px 8px;
+    margin-bottom: 4px;
+    animation: phoneIn .28s ease;
+}
+
+#vero:has(#topscreen:target) #keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 160px;
+    padding: 10px 10px 12px;
+    border-radius: 8px 8px 18px 18px;
+    animation: phoneIn .28s ease;
+}
+
+/* Transición suave de entrada */
+@keyframes phoneIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.98);
+        filter: blur(1px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
 
 /* Área de click */
 .openphone {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
     z-index: 10;
+    cursor: pointer;
 }
 
-/* Pantalla Superior (Abierto) */
+/* Pantalla superior */
 #topscreen {
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
     overflow: hidden;
+    background:
+        radial-gradient(circle at top, rgba(255,255,255,.12), transparent 35%),
+        linear-gradient(180deg, #006b7e 0%, #00313a 100%);
+}
+
+#topscreen::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 12px 12px 6px 6px;
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.12));
+    pointer-events: none;
 }
 
 .screenframe {
-    width: 75%;
-    height: 75%;
+    width: 78%;
+    height: 76%;
     background: #000;
-    border: 2px solid var(--vero-light);
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(0, 153, 179, 0.4);
+    border: 2px solid rgba(0, 153, 179, .8);
+    border-radius: 8px;
+    box-shadow:
+        0 0 14px rgba(0, 153, 179, .24),
+        inset 0 0 0 1px rgba(255,255,255,.05);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
     position: relative;
 }
@@ -457,35 +550,51 @@ main {
     width: 100%;
     height: 100%;
     margin: 0 !important;
+    font-size: 0;
     position: relative;
-    font-size: 0; /* Oculta el ícono de imagen rota si la ruta falla */
 }
 
 .screenframe img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover;
+    display: block;
     background-image: var(--image);
     background-size: cover;
     background-position: center;
     position: absolute;
-    top: 0; left: 0;
+    inset: 0;
+    transform: scale(1.02);
 }
 
 /* Teclado */
-.divisorsor {
-    width: 100%;
-    height: 1px;
-    background: var(--vero-light);
-    opacity: 0.3;
-    margin-bottom: 8px;
-    border: none;
+#keyboard {
     position: relative;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.06), transparent 28%),
+        linear-gradient(145deg, var(--vero-light), var(--vero-dark));
 }
-.divisorsor:before, .divisorsor:after { display: none; }
+
+#keyboard::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 6px 6px 14px 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.12));
+    pointer-events: none;
+}
+
+.divisorsor {
+    width: 84%;
+    height: 1px;
+    margin: 2px 0 10px;
+    border: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 153, 179, .9), transparent);
+    opacity: .7;
+}
 
 .rowrowro {
-    width: 85%;
+    width: 86%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
@@ -495,62 +604,90 @@ main {
     padding: 0 !important;
     height: auto !important;
     border-radius: 0 !important;
+    position: relative;
+    z-index: 1;
 }
 
 .rowrowro p {
-    width: 20px !important;
-    height: 14px !important;
-    background: var(--vero-dark) !important;
-    border: 1px solid var(--vero-celeste) !important;
+    width: 21px !important;
+    height: 15px !important;
+    margin: 0 !important;
+    flex: none !important;
+    display: block !important;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.08), transparent 45%),
+        var(--vero-dark) !important;
+    border: 1px solid rgba(0, 153, 179, .65) !important;
     color: var(--vero-light) !important;
-    border-radius: 3px !important;
+    border-radius: 4px !important;
     font-size: 7px !important;
     text-align: center;
-    line-height: 14px !important;
-    margin: 0 !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.5) inset !important;
-    display: block !important;
-    flex: none !important;
+    line-height: 15px !important;
+    box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.55),
+        0 1px 0 rgba(255,255,255,.05) !important;
 }
-/* Eliminar letras extra de la base anterior para mantenerlo limpio */
-.rowrowro p:after, .rowrowro p:before { content: "" !important; display: none !important; }
 
-/* Botón Rojo Central */
+.rowrowro p:after,
+.rowrowro p:before {
+    content: "" !important;
+    display: none !important;
+}
+
+/* Botón central */
 .sillyring {
-    width: 28px;
-    height: 28px;
-    background: var(--vero-red);
-    border: 2px solid var(--vero-dark);
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     margin-top: 10px;
-    box-shadow: 0 0 10px rgba(125, 0, 0, 0.6);
+    background: radial-gradient(circle at 30% 30%, #a10000 0%, var(--vero-red) 45%, #4d0000 100%);
+    border: 2px solid rgba(0, 40, 48, .95);
+    border-radius: 50%;
+    box-shadow:
+        0 0 10px rgba(125, 0, 0, .55),
+        inset 0 1px 2px rgba(255,255,255,.15);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     position: relative;
     inset: auto !important;
+    z-index: 1;
 }
+
 .sillyring div {
-    width: 80%;
-    height: 80%;
+    width: 78%;
+    height: 78%;
     background: var(--vero-dark);
     border-radius: 50%;
+    border: 1px solid rgba(0, 153, 179, .25) !important;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 0 !important;
-    border: none !important;
 }
+
 .sillyring div span {
-    width: 60%;
-    height: 60%;
-    background: var(--vero-red);
+    width: 58%;
+    height: 58%;
+    background: radial-gradient(circle at 30% 30%, #b00000 0%, var(--vero-red) 70%);
     border-radius: 50%;
-    box-shadow: 0 0 8px var(--vero-red);
     display: block;
     margin: auto;
+    box-shadow: 0 0 8px rgba(125, 0, 0, .6);
     outline: none !important;
 }
 
-/* Ocultar decoraciones viejas innecesarias */
-.decoratione, #keyboard:after { display: none !important; }
+/* Limpieza */
+.decoratione,
+#keyboard:after {
+    display: none !important;
+}
+
+/* Ajuste mobile */
+@media (max-width: 480px) {
+    #vero {
+        right: 10px;
+        bottom: 10px;
+        transform: scale(.96);
+        transform-origin: bottom right;
+    }
+}
