@@ -383,7 +383,9 @@ main {
 .sillyring div span { display: block; width: calc(60% - 10px); height: 50%; margin: auto; background: silver; border-radius: 4px; outline: gray solid 3px; box-shadow: -1px 1px 1px 1px #000 inset, 0 0 0 3.5px #fff; }
 .decoratione { width: 105%; max-width: 105% !important; height: 30px; background: 0 0; position: absolute; margin-top: 9px; left: -2px; border-top: 1px solid var(--veroblue); border-bottom: 2px solid var(--veroblue); text-align: center; white-space: nowrap; word-spacing: 35px; font-size: 26px !important; font-weight: 700; color: #599399; }
 .decoratione p:last-child:first-letter { color: #1d6145; }
-.decoratione p { text-shadow: none !important; position: relative; margin: 0 !important; line-height: 30px; font-family: arial; font-size: 26px !important; }
+.decoratione p { text-shadow: none !important; position: relative; margin: 0 !important; line-height: 30px; font-family: arial; font-size: 14px !important; letter-spacing: 2px; }
+.decoratione p:first-child:before { content: "VERO"; }
+.decoratione p:last-child { display: none; }
 .decoratione p:last-child { line-height: 30px; color: #893728; }
 .decoratione p:last-child:after { content: "."; font-size: 15px; position: absolute; right: 10px; bottom: 2px; }
 .decoratione p:last-child:before { content: "O"; font-size: 7px; position: absolute; right: 6px; bottom: 7px; }
