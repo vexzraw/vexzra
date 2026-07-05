@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             'hello.gif', // Reemplaza con tus rutas
             'cat.gif',
             'dog.gif',
-            'sigma'
+            'sigma.gif'
         ];
         
         setInterval(() => {
