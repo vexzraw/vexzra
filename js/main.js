@@ -146,11 +146,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const dashboard = document.querySelector('main.dashboard');
     if(dashboard) {
         const gifs = [
-            'hello.gif', // Reemplaza con tus rutas
+            'hello.gif', // Asegúrate de que el nombre sea EXACTO (incluyendo mayúsculas)
             'cat.gif',
             'dog.gif',
             'sigma.gif'
         ];
+        
+        setInterval(() => {
+            if(Math.random() > 0.8) return; // 80% de probabilidad de aparecer (más frecuente para que lo veas)
+
+            const img = new Image();
+            const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
+            img.src = randomGif;
+            img.className = 'floating-gif';
+            
+            // Posición aleatoria
+            img.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            img.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+            
+            // IMPORTANTE: Solo lo agregamos al documento si la imagen carga correctamente
+            img.onload = () => {
+                document.body.appendChild(img);
+                
+                // Fade in suave
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => img.classList.add('show'));
+                });
+                
+                // Fade out y eliminar
+                setTimeout(() => {
+                    img.classList.remove('show');
+                    setTimeout(() => img.remove(), 1000);
+                }, 3000); // Desaparece a los 3 segundos
+            };
+
+            // Si la ruta está mal, te avisa en la consola del navegador para que lo detectes
+            img.onerror = () => console.error('Error al cargar el GIF. Revisa la ruta o mayúsculas:', randomGif);
+            
+        }, 4000); // Aparece cada 4 segundos
+    }
         
         setInterval(() => {
             if(Math.random() > 0.5) return; // 50% de probabilidad de aparecer
