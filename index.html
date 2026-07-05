@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El paraíso de Veronica</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-gothic">
+
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <!-- REEMPLAZA ESTO CON TU PROPIO GIF/IMAGEN -->
+        <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Splash">
+    </div>
+
+    <!-- Fondo Aura Dinámica -->
+    <div class="aura-bg"></div>
+    <!-- Canvas para Estrellas Neón -->
+    <canvas id="star-canvas"></canvas>
+
+    <!-- Audio en Loop -->
+    <audio id="audio-player" loop autoplay>
+        <!-- REEMPLAZA ESTO CON TU PROPIA CANCIÓN -->
+        <source src="assets/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <button id="menu-btn" class="icon-btn">☰</button>
+        </div>
+        <div class="logo-container">
+            <!-- REEMPLAZA ESTO CON TU LOGO -->
+            <img src="https://via.placeholder.com/200x60/FFFFFF/000000?text=El+Paraiso+de+Veronica" alt="Logo">
+        </div>
+        <div class="header-right">
+            <button id="search-btn" class="icon-btn">🔍</button>
+            <button id="settings-btn" class="icon-btn">⚙️</button>
+            
+            <!-- Dropdown Buscador -->
+            <div id="search-dropdown" class="dropdown">
+                <input type="text" id="search-input" placeholder="Buscar entradas...">
+                <div id="search-results"></div>
+            </div>
+
+            <!-- Dropdown Configuración -->
+            <div id="settings-dropdown" class="dropdown">
+                <button class="theme-btn" data-theme="gothic">Tema Gótico (Default)</button>
+                <button class="theme-btn" data-theme="green">Tema Verde y Beige</button>
+                <button class="theme-btn" data-theme="celeste">Tema Celeste y Rojo</button>
+                <button class="theme-btn" data-theme="matrix">Tema Matrix (AMOLED)</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menú Lateral -->
+    <nav id="side-menu">
+        <a href="#" id="close-menu" style="position:absolute; top:15px; right:15px;">✖</a>
+        <a href="sobre-veronica.html">Sobre Veronica</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="links-utiles.html">Links útiles</a>
+    </nav>
+
+    <!-- Contenido Principal (Blog) -->
+    <main class="dashboard">
+        <!-- Entrada 1 CON Imagen -->
+        <a href="entrada-1.html" class="blog-card">
+            <img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?q=80&w=1000&auto=format&fit=crop" alt="Imagen de la entrada">
+            <h2>Mi primer entrada con imagen</h2>
+            <p>Esta es una descripción de prueba. Mostrando cómo se adapta el diseño cuando se incluye una imagen grande en la parte superior de la tarjeta de glassmorphism.</p>
+        </a>
+
+        <!-- Entrada 2 SIN Imagen -->
+        <a href="entrada-2.html" class="blog-card">
+            <h2>Pensamientos sin imagen</h2>
+            <p>Aquí puedes ver cómo se ve la tarjeta cuando no hay imagen. El texto fluye perfectamente, manteniendo la jerarquía visual y el espaciado armonioso. Las tarjetas flotan suavemente sobre el fondo dinámico.</p>
+        </a>
+    </main>
+
+    <!-- MINI CELU VERO -->
+    <div id="vero">
+        <div class="openopen" id="topscreen">
+            <a class="openphone" href="#front"></a>
+            <div class="screenframe">
+                <p><img src="" alt="Screen image"/></p>
+            </div>
+        </div>
+        <div id="keyboard">
+            <div class="divisorsor"></div>
+            <a class="openphone" href="#front"></a>
+            <div class="decoratione">
+                <p>◜ ◝</p>
+                <p>◟ ◞</p>
+            </div>
+            <div class="rowrowro" id="thefirsty">
+                <p>1</p><p>2</p><p>3</p>
+            </div>
+            <div class="rowrowro">
+                <p>4</p><p>5</p><p>6</p>
+            </div>
+            <div class="rowrowro">
+                <p>7</p><p>8</p><p>9</p>
+            </div>
+            <div class="rowrowro">
+                <p>*</p><p>0</p><p>#</p>
+            </div>
+            <div class="sillyring">
+                <div><span></span></div>
+            </div>
+        </div>
+        <div class="openopen" id="front">
+            <a class="openphone" href="#topscreen"></a>
+            <div class="labelidk"></div>
+        </div>
+        <div id="antenna"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/posts-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
