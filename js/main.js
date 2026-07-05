@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
             constructor() {
                 this.x = Math.random() * starCanvas.width;
                 this.y = Math.random() * starCanvas.height;
-                this.size = Math.random() * 3 + 1;
+                // Hacemos las estrellas un poco más grandes para que se note la forma
+                this.size = Math.random() * 3 + 2; 
                 this.speedY = Math.random() * 0.5 + 0.2;
                 this.opacity = Math.random() * 0.8 + 0.2;
                 const colors = ['#ff00ff', '#00ffff', '#ffff00', '#00ff00'];
@@ -120,15 +121,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             draw() {
-                ctx.beginPath();
-                ctx.shadowBlur = 10;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.shadowBlur = 15;
                 ctx.shadowColor = this.color;
                 ctx.fillStyle = this.color;
                 ctx.globalAlpha = this.opacity;
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                
+                // Dibujar estrella de 5 puntas
+                ctx.beginPath();
+                let rot = Math.PI / 2 * 3;
+                let step = Math.PI / 5;
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(0, this.size);
+                    ctx.lineTo(Math.cos(rot + step) * (this.size / 2), Math.sin(rot + step) * (this.size / 2));
+                    ctx.lineTo(0, this.size);
+                    rot += step * 2;
+                }
+                ctx.closePath();
                 ctx.fill();
-                ctx.shadowBlur = 0;
-                ctx.globalAlpha = 1;
+                
+                ctx.restore();
             }
         }
 
@@ -153,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ];
         
         setInterval(() => {
-            if(Math.random() > 0.8) return; // 80% de probabilidad de aparecer (más frecuente para que lo veas)
+            if(Math.random() > 0.8) return; // 80% de probabilidad de aparecer
 
             const img = new Image();
             const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
@@ -180,37 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 3000); // Desaparece a los 3 segundos
             };
 
-            // Si la ruta está mal, te avisa en la consola del navegador para que lo detectes
+            // Si la ruta está mal, te avisa en la consola del navegador
             img.onerror = () => console.error('Error al cargar el GIF. Revisa la ruta o mayúsculas:', randomGif);
             
         }, 4000); // Aparece cada 4 segundos
-    }
-        
-        setInterval(() => {
-            if(Math.random() > 0.5) return; // 50% de probabilidad de aparecer
-
-            const img = document.createElement('img');
-            // Validar si los gifs existen o usar placeholder
-            const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
-            img.src = randomGif;
-            img.onerror = () => img.remove(); // Si no encuentra el gif, lo borra
-            img.className = 'floating-gif';
-            
-            // Posición aleatoria
-            img.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            img.style.top = Math.random() * (window.innerHeight - 100) + 'px';
-            
-            document.body.appendChild(img);
-            
-            // Fade in
-            setTimeout(() => img.classList.add('show'), 50);
-            
-            // Fade out y eliminar
-            setTimeout(() => {
-                img.classList.remove('show');
-                setTimeout(() => img.remove(), 1000);
-            }, 3000); // Desaparece a los 3 segundos
-        }, 5000); // Aparece cada 5 segundos
     }
 
     // 9. Reproducir Audio (Loop)
