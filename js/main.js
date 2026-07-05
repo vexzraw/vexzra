@@ -146,9 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const dashboard = document.querySelector('main.dashboard');
     if(dashboard) {
         const gifs = [
-            'assets/gifs/gif1.gif', // Reemplaza con tus rutas
-            'assets/gifs/gif2.gif',
-            'assets/gifs/gif3.gif'
+            'hello.gif', // Reemplaza con tus rutas
+            'cat.gif',
+            'dog.gif',
+            'sigma'
         ];
         
         setInterval(() => {
