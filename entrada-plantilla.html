@@ -5,6 +5,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi primer entrada - El paraíso de Veronica</title>
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- CSS EXCLUSIVO PARA ESTA ENTRADA (puedes moverlo a styles.css si prefieres) -->
+    <style>
+        /* ===== LINKS CON GRADIENTE ROJO Y CELESTE ===== */
+        .page-content a {
+            background: linear-gradient(90deg, #ff2a2a, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+        .page-content a:hover {
+            opacity: 0.8;
+        }
+        /* Links normales dentro del audio player no afectados */
+        .custom-audio a {
+            background: none;
+            -webkit-text-fill-color: inherit;
+        }
+
+        /* ===== SEPARADORES DE TEXTO ===== */
+        .text-separator {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin: 25px 0;
+            opacity: 0.7;
+            border-radius: 4px;
+        }
+
+        /* ===== AUDIO PLAYER CUSTOM ===== */
+        .custom-audio {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-audio-label {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #b0b0b0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .custom-audio-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .play-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff2a2a, #00d4ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 0 12px rgba(255, 42, 42, 0.3), 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 18px rgba(255, 42, 42, 0.5), 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+        .play-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+            margin-left: 2px;
+        }
+        .play-btn.playing svg {
+            margin-left: 0;
+        }
+        .audio-progress-container {
+            flex: 1;
+            height: 6px;
+            background: #2a2a2a;
+            border-radius: 99px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .audio-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff2a2a, #00d4ff);
+            border-radius: 99px;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+        }
+        .audio-time {
+            font-size: 12px;
+            color: #888;
+            font-family: 'Courier New', monospace;
+            min-width: 90px;
+            text-align: right;
+        }
+        /* Ocultar el audio nativo pero mantenerlo funcional */
+        .native-audio {
+            display: none;
+        }
+
+        /* ===== ESTILOS DE TEXTO (Markdown-like) ===== */
+        .entry-text h2 {
+            font-size: 26px;
+            margin: 30px 0 15px 0;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 8px;
+        }
+        .entry-text h3 {
+            font-size: 20px;
+            margin: 25px 0 12px 0;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+        .entry-text strong {
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .entry-text em {
+            font-style: italic;
+            color: #d0d0d0;
+        }
+        .entry-text del {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .entry-text small {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        .entry-text big {
+            font-size: 22px;
+        }
+        .entry-text blockquote {
+            border-left: 3px solid var(--text-color);
+            padding-left: 15px;
+            margin: 15px 0;
+            opacity: 0.8;
+            font-style: italic;
+        }
+        .entry-text ul {
+            margin: 10px 0 10px 25px;
+            line-height: 1.8;
+        }
+        .entry-text ul li {
+            margin-bottom: 5px;
+        }
+        .entry-text code {
+            background: rgba(255,255,255,0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* ===== EMBED DE YOUTUBE RESPONSIVO ===== */
+        .youtube-embed {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .youtube-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* ===== GIFS E IMÁGENES DENTRO DEL TEXTO ===== */
+        .entry-text img {
+            width: 100%;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+        .entry-text .inline-gif {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
 </head>
 <body class="theme-gothic">
 
@@ -20,7 +217,13 @@
             <a href="index.html"><img src="https://via.placeholder.com/200x60/FFFFFF/000000?text=El+Paraiso+de+Veronica" alt="Logo"></a>
         </div>
         <div class="header-right">
-            <a href="index.html" class="icon-btn" style="text-decoration:none;">🏠</a>
+            <!-- SVG DE CASA BLANCA EN LUGAR DE EMOJI -->
+            <a href="index.html" class="icon-btn" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
         </div>
     </header>
 
@@ -37,35 +240,173 @@
         <a href="index.html" class="back-btn">← Volver al Dashboard</a>
 
         <article class="page-content">
-            <h1 style="font-size: 36px; margin-bottom: 15px;">Mi primer entrada con imagen</h1>
+            <h1 style="font-size: 36px; margin-bottom: 15px;">Archivo Clasificado</h1>
 
             <!-- IMAGEN OPCIONAL -->
-            <img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?q=80&w=1000&auto=format&fit=crop" alt="Imagen de la entrada" style="width:100%; border-radius: 12px; margin-bottom: 20px;">
+            <img src="welcome.gif" alt="Imagen de la entrada" style="width:100%; border-radius: 12px; margin-bottom: 20px;">
 
-            <!-- TEXTO -->
-            <p style="line-height: 1.8; font-size: 18px; margin-bottom: 20px;">
-                ¡Bienvenida a mi paraíso digital! Hoy quiero compartir con ustedes un poco de mi mundo. 
-                Esta plantilla está diseñada para que puedas escribir todo lo que quieras, manteniendo 
-                el efecto de vidrio (glassmorphism) intacto.
-            </p>
+            <!-- TEXTO CON FORMATO MARKDOWN-LIKE -->
+            <div class="entry-text" style="line-height: 1.8; font-size: 18px; margin-bottom: 20px;">
 
-            <!-- LINKS -->
+                <p><code>[ ARCHIVO CLASIFICADO: BIENVENIDO A MI SOTANO DIGITAL ]</code></p>
+
+                <blockquote>
+                    "Hago cualquier cosa que tenga que ver con lo digital... y si me conoces lo suficiente, sabrás que solo quiero que todos estén bien."
+                </blockquote>
+
+                <p>¡Hola! Mi nombre es <strong>Veronica</strong>.</p>
+
+                <p>Si estás buscando un sitio normal, te equivocaste de enlace. Este es mi rincón de internet, diseñado con la estética del mejor justiciero de la historia (sí, hablo de <em>Vigilante/Adrian Chase</em>, y no acepto discusiones al respecto).</p>
+
+                <p>Al igual que Adrian balancea su vida entre ser un camarero y un héroe letal, yo divido mi tiempo en un montón de disciplinas digitales. Básicamente, si se puede crear con una computadora, probablemente lo haga o esté intentando aprenderlo.</p>
+
+                <!-- SEPARADOR DE TEXTO (reemplaza la ruta por tu imagen) -->
+                <img src="separador.png" alt="Separador" class="text-separator">
+                <!-- // También puedes usar: separador.jpg, divider.gif, etc. -->
+
+                <h2>¿Qué vas a encontrar aquí?</h2>
+
+                <p>Un caos extrañamente ordenado de:</p>
+
+                <ul>
+                    <li><strong>Diseño y Arte:</strong> Modelado 3D en Blender, ilustraciones en Krita y diseño gráfico general.</li>
+                    <li><strong>Código e Inteligencia Artificial:</strong> Programación pura y mis experimentos como entusiasta de la IA.</li>
+                    <li><strong>Contenido Audiovisual:</strong> Mi faceta como YouTuber de vlogs, VTuber, doblaje, canto y producción musical.</li>
+                    <li><strong>Cosas Gratis:</strong> Tengo un directorio de piratería que te va a salvar la vida si te interesa.</li>
+                </ul>
+
+                <!-- OTRO SEPARADOR -->
+                <img src="separador.png" alt="Separador" class="text-separator">
+
+                <h3>Cuando no estoy creando...</h3>
+
+                <p>Probablemente me encuentres escuchando <em>Post-Punk</em> o rock gótico (ponle play a <strong>Send My Heart</strong> de <em>The Adventures</em> para entrar en el mood), leyendo o viendo mis absolutos favoritos:</p>
+
+                <p>
+                    <del>American Psycho</del>, 
+                    <strong>Fallout</strong>, 
+                    <em>From</em>, 
+                    <big>Detroit: Become Human</big>, 
+                    <small>Severance</small>, 
+                    o <strong>Moon Knight</strong>.
+                </p>
+
+                <!-- GIF DENTRO DEL TEXTO -->
+                <img src="well.gif" alt="GIF animado" class="inline-gif">
+                <!-- // Reemplaza "mi-gif.gif" por la ruta de tu gif -->
+
+                <p>Dicen que soy una persona un poco <em>aburrida</em> al principio... pero dale una oportunidad al blog. Al final del día, solo soy una escritora y creadora que quiere compartir su arte y que todos pasen un buen rato.</p>
+
+                <p><big>¡Activa las notificaciones y únete a la misión!</big></p>
+
+            </div>
+
+            <!-- LINKS CON GRADIENTE -->
             <p style="margin-bottom: 20px;">
                 Puedes agregar enlaces como este: 
-                <a href="https://github.com" target="_blank" style="color: #00ffff; text-decoration: underline;">Visitar GitHub</a>
+                <a href="https://github.com" target="_blank">Visitar GitHub</a>
             </p>
 
-            <!-- AUDIO OPCIONAL DENTRO DE LA ENTRADA -->
-            <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
-                <p style="margin-bottom: 10px;">🎵 Canción de la entrada:</p>
-                <audio controls style="width: 100%;">
-                    <source src="assets/song.mp3" type="audio/mpeg">
+            <!-- // EJEMPLO DE LINK INTERNO -->
+            <!-- <a href="otra-entrada.html">Leer otra entrada</a> -->
+
+            <!-- // EJEMPLO DE IMAGEN CON LINK -->
+            <!-- 
+            <a href="https://ejemplo.com" target="_blank">
+                <img src="imagen.jpg" alt="Descripción" style="width:100%; border-radius:12px; margin:15px 0;">
+            </a>
+            -->
+
+            <!-- EMBED DE YOUTUBE -->
+            <div class="youtube-embed">
+                <iframe 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="YouTube video player" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <!-- // Reemplaza "dQw4w9WgXcQ" por el ID de tu video de YouTube -->
+            <!-- // El ID está en la URL después de "watch?v=" -->
+
+            <!-- AUDIO CUSTOM DENTRO DE LA ENTRADA -->
+            <div class="custom-audio">
+                <div class="custom-audio-label">
+                    <span>🎵</span> Canción de la entrada:
+                </div>
+
+                <!-- Audio nativo oculto -->
+                <audio class="native-audio" id="entry-audio">
+                    <source src="vig.mp3" type="audio/mpeg">
                     Tu navegador no soporta audio.
                 </audio>
+
+                <!-- Barra de audio custom -->
+                <div class="custom-audio-wrapper">
+                    <button class="play-btn" id="play-btn" onclick="toggleAudio()">
+                        <svg id="play-icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <svg id="pause-icon" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                    </button>
+                    <div class="audio-progress-container" id="progress-container" onclick="seekAudio(event)">
+                        <div class="audio-progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="audio-time" id="audio-time">0:00 / 0:00</div>
+                </div>
             </div>
+
         </article>
     </main>
 
     <script src="js/main.js"></script>
+
+    <!-- SCRIPT DEL AUDIO CUSTOM -->
+    <script>
+        const audio = document.getElementById('entry-audio');
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const progressFill = document.getElementById('progress-fill');
+        const progressContainer = document.getElementById('progress-container');
+        const timeDisplay = document.getElementById('audio-time');
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                playBtn.classList.add('playing');
+            } else {
+                audio.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                playBtn.classList.remove('playing');
+            }
+        }
+
+        audio.addEventListener('timeupdate', function() {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressFill.style.width = percent + '%';
+            timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration || 0);
+        });
+
+        audio.addEventListener('ended', function() {
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            playBtn.classList.remove('playing');
+            progressFill.style.width = '0%';
+        });
+
+        function seekAudio(event) {
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (event.clientX - rect.left) / rect.width;
+            audio.currentTime = pos * audio.duration;
+        }
+    </script>
 </body>
-</html>
+    </html>
