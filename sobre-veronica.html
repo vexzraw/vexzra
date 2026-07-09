@@ -114,32 +114,36 @@
   }
   .header-left,.header-right{display:flex;align-items:center;gap:1rem}
   .icon-btn{
-    background:transparent;border:1px solid rgba(138,138,143,.35);
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.15);
     color:#fff;width:44px;height:44px;border-radius:50%;
     font-size:18px;cursor:pointer;display:grid;place-items:center;
     transition:all .3s var(--ease-quiet);text-decoration:none;
   }
-  .icon-btn:hover{border-color:var(--celeste);color:var(--celeste);transform:scale(1.08)}
+  .icon-btn:hover{border-color:var(--celeste);color:var(--celeste);transform:scale(1.08);background:rgba(0,212,255,0.1)}
   .logo-container img{
     height:60px;width:auto;mix-blend-mode:screen;
     filter:drop-shadow(0 0 10px rgba(138,138,143,.4));
   }
 
-  /* Menú lateral */
+  /* Menú lateral (Glassmorphism y a la izquierda) */
   #side-menu{
-    position:fixed;top:0;right:-280px;width:260px;height:100vh;
-    background:rgba(10,10,13,.96);backdrop-filter:blur(20px);
-    border-left:1px solid rgba(138,138,143,.3);
+    position:fixed;top:0;left:-280px;width:260px;height:100vh;
+    background:rgba(20,20,25,0.65);
+    backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border-right:1px solid rgba(255,255,255,0.1);
+    box-shadow:5px 0 30px rgba(0,0,0,0.5);
     z-index:100;padding:80px 2rem 2rem;
     display:flex;flex-direction:column;gap:1.5rem;
-    transition:right .5s var(--ease-quiet);
+    transition:left .5s var(--ease-quiet);
   }
-  #side-menu.open{right:0}
+  #side-menu.open{left:0}
   #side-menu a{
     color:#fff;text-decoration:none;
     font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
     font-weight:700;font-size:16px;letter-spacing:.04em;
-    padding:.6rem 0;border-bottom:1px solid rgba(138,138,143,.12);
+    padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,0.08);
     transition:color .3s,padding-left .3s;
   }
   #side-menu a:hover{color:var(--celeste);padding-left:1rem}
@@ -327,7 +331,8 @@
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect y="2" width="16" height="2"/><rect y="7" width="16" height="2"/><rect y="12" width="16" height="2"/></svg>
     </button>
   </div>
-  <div class="logo-container"><img src="logo.png" alt="Logo"></a>
+  <div class="logo-container">
+    <a href="index.html"><img src="logo.png" alt="Logo"></a>
   </div>
   <div class="header-right">
     <a href="index.html" class="icon-btn" aria-label="Inicio">
