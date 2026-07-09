@@ -179,22 +179,23 @@
     text-shadow:none;
   }
 
-  /* Imagen central PNG */
+  /* Imagen central PNG cuadrada */
   .center-image-wrap{
     position:relative;display:inline-block;margin:1rem auto 3rem;
   }
   .center-image-wrap::before{
-    content:'';position:absolute;inset:-40px;border-radius:50%;
-    background:radial-gradient(circle,rgba(0,212,255,.25),transparent 70%);
+    content:'';position:absolute;inset:-15px;
+    border:1px solid rgba(0,212,255,.4);
     z-index:-1;animation:pulse-aura 4s ease-in-out infinite;
   }
   @keyframes pulse-aura{
     0%,100%{transform:scale(1);opacity:.6}
-    50%{transform:scale(1.15);opacity:1}
+    50%{transform:scale(1.05);opacity:1}
   }
   .center-image{
     width:280px;height:280px;object-fit:cover;
-    border-radius:50%;border:2px solid var(--grey);
+    border-radius:0; /* Totalmente cuadrada */
+    border:2px solid var(--grey-light);
     box-shadow:0 0 40px rgba(0,212,255,.25),0 0 80px rgba(138,138,143,.15);
     display:block;
   }
@@ -252,44 +253,8 @@
   }
   .stamp:nth-child(even):hover{transform:rotate(2deg) scale(1.03)}
 
-  /* Reproductor de música */
-  .music-player{
-    position:fixed;bottom:24px;right:24px;z-index:50;
-    display:flex;align-items:center;gap:.75rem;
-    background:rgba(10,10,13,.88);backdrop-filter:blur(14px);
-    border:1px solid rgba(138,138,143,.35);
-    padding:.6rem 1rem .6rem .6rem;border-radius:60px;
-    box-shadow:0 8px 30px rgba(0,0,0,.5);
-  }
-  .music-toggle{
-    width:42px;height:42px;border-radius:50%;border:none;
-    background:var(--grey);color:#000;cursor:pointer;
-    display:grid;place-items:center;font-size:16px;
-    transition:transform .3s var(--ease-quiet),background .3s;
-  }
-  .music-toggle:hover{transform:scale(1.1);background:var(--celeste)}
-  .music-toggle.playing{animation:spin 4s linear infinite;background:var(--celeste)}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .music-label{
-    font-family:'Courier New',Courier,monospace;
-    font-size:11px;letter-spacing:.18em;
-    text-transform:uppercase;color:rgba(255,255,255,.8);
-  }
-  .music-label span{color:var(--celeste);font-weight:700}
-
-  .eq{display:flex;gap:2px;align-items:flex-end;height:18px}
-  .eq span{
-    width:3px;background:var(--celeste);height:6px;
-    animation:eq 1s ease-in-out infinite;
-  }
-  .eq span:nth-child(2){animation-delay:.2s}
-  .eq span:nth-child(3){animation-delay:.4s}
-  .eq span:nth-child(4){animation-delay:.6s}
-  @keyframes eq{
-    0%,100%{height:4px}
-    50%{height:18px}
-  }
-  .music-player.paused .eq span{animation-play-state:paused}
+  /* Ocultar reproductor visual pero mantener audio */
+  .hidden-audio{display:none}
 
   @media(max-width:600px){
     header{padding:120px 1rem 1rem}
@@ -297,7 +262,6 @@
     .center-image{width:200px;height:200px}
     .stamps-grid{gap:1rem;max-width:100%}
     .stamp{max-width:calc(50% - 0.5rem)}
-    .music-player{bottom:110px;right:12px}
   }
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}
@@ -352,8 +316,8 @@
   <img src="STICKER_URL_12" class="sticker s12 img" alt="">
 </div>
 
-<!-- Música en loop (reemplaza MUSICA.mp3) -->
-<audio id="bg-music" loop preload="auto">
+<!-- Música de fondo invisible en loop (reemplaza MUSICA.mp3) -->
+<audio id="bg-music" class="hidden-audio" loop preload="auto">
   <source src="MUSICA.mp3" type="audio/mpeg">
 </audio>
 
@@ -415,15 +379,6 @@
   </div>
 </main>
 
-<!-- Reproductor de música flotante -->
-<div class="music-player paused" id="music-player">
-  <button class="music-toggle" id="music-toggle" aria-label="Reproducir música">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><polygon points="3,2 12,7 3,12"/></svg>
-  </button>
-  <div class="eq"><span></span><span></span><span></span><span></span></div>
-  <div class="music-label"><span>♪</span> Ahora suena</div>
-</div>
-
 <script>
   // Menú lateral
   const sideMenu = document.getElementById('side-menu');
@@ -433,44 +388,20 @@
     sideMenu.classList.remove('open');
   });
 
-  // Música
+  // Música de fondo en loop automática
+  // (Los navegadores bloquean el autoplay con sonido, así que se inicia al primer click)
   const music = document.getElementById('bg-music');
-  const toggle = document.getElementById('music-toggle');
-  const player = document.getElementById('music-player');
   music.volume = 0.45;
 
-  let playing = false;
-  toggle.addEventListener('click', () => {
-    if (!playing) {
-      music.play().then(() => {
-        playing = true;
-        toggle.classList.add('playing');
-        player.classList.remove('paused');
-        toggle.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><rect x="2" y="2" width="3" height="8"/><rect x="7" y="2" width="3" height="8"/></svg>';
-      }).catch(() => {
-        toggle.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><polygon points="3,2 12,7 3,12"/></svg>';
-      });
-    } else {
-      music.pause();
-      playing = false;
-      toggle.classList.remove('playing');
-      player.classList.add('paused');
-      toggle.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><polygon points="3,2 12,7 3,12"/></svg>';
-    }
-  });
+  function tryPlayMusic() {
+    music.play().catch(() => {});
+    document.removeEventListener('click', tryPlayMusic);
+    document.removeEventListener('scroll', tryPlayMusic);
+  }
 
-  // Intentar autoplay al primer click del usuario
-  document.addEventListener('click', function firstClick() {
-    if (!playing) {
-      music.play().then(() => {
-        playing = true;
-        toggle.classList.add('playing');
-        player.classList.remove('paused');
-        toggle.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><rect x="2" y="2" width="3" height="8"/><rect x="7" y="2" width="3" height="8"/></svg>';
-      }).catch(() => {});
-      document.removeEventListener('click', firstClick);
-    }
-  }, { once: true });
+  // Intentar reproducir en la primera interacción
+  document.addEventListener('click', tryPlayMusic);
+  document.addEventListener('scroll', tryPlayMusic);
 </script>
 </body>
 </html>
